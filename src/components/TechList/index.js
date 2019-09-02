@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 
-// import { Container } from './styles';
-
 export default function TechList() {
   const [techs, setTechs] = useState([]);
+  const [newTech, setNewTech] = useState('');
 
   function addTech() {
-    setTechs([ ...techs, 'Node.js' ]);
+    setTechs([ ...techs, newTech ]);
+    setNewTech('');
   }
 
   return (
-    <div>
+    <form onSubmit={addTech} data-testid="tech-form">
       <ul data-testid="tech-list">
         {techs.map(tech => <li key={tech}>{techs}</li>)}
       </ul>
-      <button onClick={addTech}>Adicionar</button>
-    </div>
+
+      <label htmlFor="tech">Tech</label>
+      <input id="tech" value={newTech} onChange={e => setNewTech(e.target.value)} />
+
+      <button type="submit">Adicionar</button>
+    </form>
   );
 }
