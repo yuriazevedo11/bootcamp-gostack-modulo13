@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-export default function TechList() {
-  const techs = useSelector(state => state.techs);
-  const [newTech, setNewTech] = useState('');
-  const dispatch = useDispatch();
+import { addTech } from '../../store/modules/techs/actions'
 
-  function addTech() {
-    useDispatch({ type: 'ADD_TECH', payload: { tech: setNewTech } });
-    setTechs([ ...techs, newTech ]);
-    setNewTech('');
+export default function TechList() {
+  const [newTech, setNewTech] = useState('')
+
+  const techs = useSelector(state => state.techs)
+  const dispatch = useDispatch()
+
+  function handleAddTech() {
+    dispatch(addTech(newTech))
+    setNewTech('')
   }
 
   return (
-    <form onSubmit={addTech} data-testid="tech-form">
+    <form onSubmit={handleAddTech} data-testid="tech-form">
       <ul data-testid="tech-list">
         {techs.map(tech => <li key={tech}>{tech}</li>)}
       </ul>
